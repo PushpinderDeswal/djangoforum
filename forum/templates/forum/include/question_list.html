@@ -1,0 +1,62 @@
+{% if questions %}
+{% for question in questions %}
+<div class="card my-3">
+    <div class="card-header">
+        <h5><a href="{% url "forum:question_detail" question.slug %}">{{ question.title }}</a></h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ question.description|truncatewords:22 }}</p>
+        {% for tag in question.tags.all %}
+        <span class="badge bg-info text-dark my-2">
+            <a class="text-decoration-none text-reset" href="{% url "forum:questions_by_tag" tag.name %}">{{ tag.name }}</a>
+        </span>
+        {% endfor %}
+        <div class="d-flex align-items-center">
+            <div class="d-flex">
+                <small class="me-3"><span class="fw-bold">Asked By: </span>{{ question.questioner.username }}</small>
+                <small class="me-3"><span class="fw-bold">Asked At: </span>{{ question.created_at|date:"d M,Y" }}</small>
+                <small><span class="fw-bold">Updated At: </span>{{ question.updated_at|date:"d M,Y" }}</small>
+            </div>
+            <div class="ms-auto d-flex">
+                <form action="{% url "forum:upvote_question" question.id %}" method="post"
+                    class="d-flex align-items-center me-2 border border-secondary-subtle rounded">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <span class="mx-2">{{question.upvotes}}</span>
+                    <button type="submit" class="btn btn-dark btn-sm" id="question-upvote-button">
+                        {% if question.user_upvoted %}
+                        <i class="bi-hand-thumbs-up-fill text-primary"></i>
+                        {% else %}
+                        <i class="bi-hand-thumbs-up"></i>
+                        {% endif %}
+                    </button>
+                </form>
+                <form action="{% url "forum:downvote_question" question.id %}" method="post"
+                    class="d-flex align-items-center border border-secondary-subtle rounded">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <span class="mx-2">{{question.downvotes}}</span>
+                    <button type="submit" class="btn btn-dark btn-sm" id="question-downvote-button">
+                        {% if question.user_downvoted %}
+                        <i class="bi-hand-thumbs-down-fill text-primary"></i>
+                        {% else %}
+                        <i class="bi-hand-thumbs-down"></i>
+                        {% endif %}
+                    </button>
+                </form>
+                {% if question.questioner.username == user.get_username %}
+                <a class="btn btn-outline-info btn-sm ms-2 border border-secondary-subtle" href="{% url "forum:update_question" question.slug %}?next={{ request.path|urlencode }}">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a class="btn btn-outline-danger btn-sm ms-2 border border-secondary-subtle" href="{% url "forum:delete_question" question.slug %}?next={{ request.path|urlencode }}">
+                    <i class="bi bi-trash"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p>There is no question right now, you can ask one.</p>
+{% endif %}

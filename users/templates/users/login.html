@@ -1,0 +1,31 @@
+{% extends "forum/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}DjangoForum - Login{% endblock %}
+
+{% block content %}
+    <div class="card mx-auto" style="max-width: 40rem;">
+        <div class="card-header fs-4 fw-bold">
+            Welcome back!
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group d-flex justify-content-between align-items-center">
+                    <button class="btn btn-outline-info" type="submit">Login</button>
+                    <small class="text-muted">
+                        <a href="#">Forgot Password?</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{% url 'users:register' %}">Sign Up Now</a>
+            </small>
+        </div>
+      </div>
+{% endblock content %}

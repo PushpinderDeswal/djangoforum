@@ -1,0 +1,19 @@
+{% extends "forum/base.html" %}
+
+{% block title %}DjangoForum - Delete response{% endblock %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 40rem;">
+    <div class="card-header fs-4 fw-bold">
+        Delete Response
+    </div>
+    <div class="card-body">
+        <p>Do you really want to delete this response?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Yes</button>
+            <a href="{% url "forum:question_detail" response.question.slug %}" class="btn btn-secondary">No</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "forum/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+     <div class="card mx-auto" style="max-width: 40rem;">
+        <div class="card-header fs-4 fw-bold">
+            Update Profile
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+      </div>
+{% endblock content %}

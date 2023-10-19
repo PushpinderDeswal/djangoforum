@@ -1,0 +1,24 @@
+{% extends "forum/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}DjangoForum - Update response{% endblock %}
+
+{% block content %}
+<div class="card my-3 mx-auto" style="max-width: 40rem;">
+    <div class="card-header">
+        <h5>Update response</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
+            <button class="btn btn-outline-info" type="submit">Update</button>
+            <button class="btn btn-secondary">
+                <a class="text-decoration-none text-reset" href="{% url "forum:question_detail" response.question.slug %}">Cancel</a>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

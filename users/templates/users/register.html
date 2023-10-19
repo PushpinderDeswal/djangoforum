@@ -1,0 +1,25 @@
+{% extends "forum/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+     <div class="card mx-auto" style="max-width: 40rem;">
+        <div class="card-header fs-4 fw-bold">
+            Join Today
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{% url "users:login" %}">Sign In</a>
+            </small>
+        </div>
+      </div>
+{% endblock content %}

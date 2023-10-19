@@ -1,0 +1,12 @@
+{% extends "forum/base.html" %}
+
+{% block title %}DjangoForum | Questions by you{% endblock  %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <h1>Latest questions asked by you!</h1>
+        {% include "forum/include/question_list.html" %}
+    </div>
+</div>
+{% endblock %}
